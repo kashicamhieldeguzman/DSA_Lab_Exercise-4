@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+        <nav class="site-nav" aria-label="Main">
+        <ul>
+            <li><a class="nav-link" href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}aria-current="page"{% endif %}>Home</a></li>
+            <li><a class="nav-link" href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}aria-current="page"{% endif %}>Profile</a></li>
+            <li><a class="nav-link" href="{{ url_for('works') }}" {% if request.endpoint == 'works' %}aria-current="page"{% endif %}>Programming Works</a></li>
+            <li><a class="nav-link" href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>Contacts</a></li>
+        </ul>
+    </nav>
+    <div class="welcome contact-page">
+        <div class="welcome-content">
+            <h1>Contact Information</h1>
+
+            <div class="contact-card-wrap">
+                <ul class="contact-list">
+                    <li>
+                        <a class="contact-link" href="mailto:kashicamhieldeguzman@gmail.com">
+                            <span class="contact-icon">@</span>
+                            <span class="contact-text">
+                                <span class="contact-name">Email</span>
+                                <span class="contact-value">kashicamhieldeguzman@gmail.com</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="contact-link" href="https://facebook.com/KashicaMhieldeGuzman" target="_blank" rel="noopener">
+                            <span class="contact-icon">f</span>
+                            <span class="contact-text">
+                                <span class="contact-name">Facebook</span>
+                                <span class="contact-value">facebook.com/kashicamhieldeguzman</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="contact-link" href="https://github.com/kashicamhieldeguzman" target="_blank" rel="noopener">
+                            <span class="contact-icon">&lt;/&gt;</span>
+                            <span class="contact-text">
+                                <span class="contact-name">GitHub</span>
+                                <span class="contact-value">github.com/kashicamhieldeguzman</span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <a href="{{ url_for('index') }}" class="start-button">↩ Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

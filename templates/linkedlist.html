@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Linked List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+        <nav class="site-nav" aria-label="Main">
+        <ul>
+            <li><a class="nav-link" href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}aria-current="page"{% endif %}>Home</a></li>
+            <li><a class="nav-link" href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}aria-current="page"{% endif %}>Profile</a></li>
+            <li><a class="nav-link" href="{{ url_for('works') }}" {% if request.endpoint == 'works' %}aria-current="page"{% endif %}>Programming Works</a></li>
+            <li><a class="nav-link" href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>Contacts</a></li>
+        </ul>
+    </nav>
+
+<div class="welcome linkedlist-page">
+<div class="welcome-content">
+<div class="ll-wide">
+
+    <h1>Linked List</h1>
+
+    <p id="message" class="ll-message" hidden></p>
+
+    <!-- The list -->
+    <div class="ll-panel">
+        <h3 class="stat-label">Your list</h3>
+        <div class="ll-track" id="track"></div>
+    </div>
+
+    <!-- Buttons: 2 columns x 2 rows -->
+    <div class="ll-grid">
+
+        <div class="ll-panel ll-box">
+            <h3 class="stat-label">Insert</h3>
+            <div class="retro-form">
+                <label>Value:</label>
+                <input type="text" id="insertValue" placeholder="e.g. 10" autocomplete="off">
+                <label>After value:</label>
+                <input type="text" id="afterValue" placeholder="Only for insert after" autocomplete="off">
+                <div class="btn-row">
+                    <button class="btn-small" onclick="insertAtBeginning()">Insert at beginning</button>
+                    <button class="btn-small" onclick="insertAtEnd()">Insert at end</button>
+                    <button class="btn-small" onclick="insertAfter()">Insert after value</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ll-panel ll-box">
+            <h3 class="stat-label">Search</h3>
+            <div class="retro-form">
+                <label>Value:</label>
+                <input type="text" id="searchValue" placeholder="Value to find" autocomplete="off">
+                <div class="btn-row">
+                    <button class="btn-small" onclick="searchValue()">Search</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ll-panel ll-box">
+            <h3 class="stat-label">Delete</h3>
+            <div class="retro-form">
+                <label>Value:</label>
+                <input type="text" id="deleteValue" placeholder="Only for delete value" autocomplete="off">
+                <div class="btn-row">
+                    <button class="btn-small btn-danger" onclick="deleteLast()">Delete last</button>
+                    <button class="btn-small btn-danger" onclick="deleteFirst()">Delete first</button>
+                    <button class="btn-small btn-danger" onclick="deleteValue()">Delete value</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ll-panel ll-box">
+            <h3 class="stat-label">List</h3>
+            <div class="retro-form">
+                <div class="btn-row">
+                    <button class="btn-small" onclick="loadSample()">Load sample</button>
+                    <button class="btn-small btn-danger" onclick="clearList()">Clear list</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <a href="{{ url_for('works') }}" class="start-button">↩ Back</a>
+
+</div>
+</div>
+</div>
+
+<script>
+// ---------- Linked list (same logic as your Python lab) ----------
+class Node {
+    constructor(data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    constructor() {
+        this.head = null;
+        this.tail = null;
+    }
+
+    insertAtBeginning(data) {
+        const newNode = new Node(data);
+        if (this.head) {
+            newNode.next = this.head;
+            this.head = newNode;
+        } else {
+            this.head = newNode;
+            this.tail = newNode;
+        }
+    }
+
+    insertAtEnd(data) {
+        const newNode = new Node(data);
+        if (this.head) {
+            this.tail.next = newNode;
+            this.tail = newNode;
+        } else {
+            this.head = newNode;
+            this.tail = newNode;
+        }
+    }
+
+    search(data) {
+        let current = this.head;
+        while (current) {
+            if (current.data === data) return true;
+            current = current.next;
+        }
+        return false;
+    }
+
+    removeBeginning() {
+        if (!this.head) return null;
+        const removed = this.head.data;
+        this.head = this.head.next;
+        if (!this.head) this.tail = null;
+        return removed;
+    }
+
+    removeAtEnd() {
+        if (!this.head) return null;
+        if (this.head === this.tail) {
+            const removed = this.head.data;
+            this.head = null;
+            this.tail = null;
+            return removed;
+        }
+        let current = this.head;
+        while (current.next !== this.tail) {
+            current = current.next;
+        }
+        const removed = this.tail.data;
+        this.tail = current;
+        this.tail.next = null;
+        return removed;
+    }
+
+    removeAt(data) {
+        if (!this.head) return null;
+        if (this.head.data === data) {
+            return this.removeBeginning();
+        }
+        let current = this.head;
+        while (current.next) {
+            if (current.next.data === data) {
+                const removed = current.next.data;
+                current.next = current.next.next;
+                if (!current.next) this.tail = current;
+                return removed;
+            }
+            current = current.next;
+        }
+        return null;
+    }
+
+    insertAfter(nodeData, data) {
+        let current = this.head;
+        while (current) {
+            if (current.data === nodeData) {
+                const newNode = new Node(data);
+                newNode.next = current.next;
+                current.next = newNode;
+                if (current === this.tail) this.tail = newNode;
+                return data;
+            }
+            current = current.next;
+        }
+        return null;
+    }
+}
+
+const list = new LinkedList();
+
+// ---------- Helpers ----------
+function getValue(id) {
+    const text = document.getElementById(id).value.trim();
+    if (text !== "" && !isNaN(text)) return Number(text);   // "10" becomes 10
+    return text;
+}
+
+function showMessage(text, type) {
+    const box = document.getElementById("message");
+    box.textContent = text;
+    box.className = "ll-message " + type;
+    box.hidden = false;
+}
+
+function showList(foundValue) {
+    const track = document.getElementById("track");
+    track.innerHTML = "";
+
+    if (!list.head) {
+        track.innerHTML = '<p class="ll-empty">The list is empty. Add a value to start.</p>';
+        return;
+    }
+
+    let current = list.head;
+    while (current) {
+        const item = document.createElement("div");
+        item.className = "ll-item";
+
+        let tags = "";
+        if (current === list.head) tags += '<span class="ll-tag head">Head</span>';
+        if (current === list.tail) tags += '<span class="ll-tag tail">Tail</span>';
+
+        const found = current.data === foundValue ? " found" : "";
+        item.innerHTML =
+            '<div class="ll-tags">' + tags + '</div>' +
+            '<div class="ll-node' + found + '"><span class="ll-value"></span><span class="ll-next"></span></div>';
+
+        item.querySelector(".ll-value").textContent = current.data;
+        track.appendChild(item);
+
+        track.insertAdjacentHTML("beforeend", '<span class="ll-arrow">&#9658;</span>');
+        current = current.next;
+    }
+    track.insertAdjacentHTML("beforeend", '<span class="ll-null">NULL</span>');
+}
+
+// ---------- Button functions ----------
+function insertAtBeginning() {
+    const value = getValue("insertValue");
+    if (value === "") return showMessage("Type a value first.", "error");
+    list.insertAtBeginning(value);
+    showMessage('Added "' + value + '" to the start.', "success");
+    showList();
+}
+
+function insertAtEnd() {
+    const value = getValue("insertValue");
+    if (value === "") return showMessage("Type a value first.", "error");
+    list.insertAtEnd(value);
+    showMessage('Added "' + value + '" to the end.', "success");
+    showList();
+}
+
+function insertAfter() {
+    const value = getValue("insertValue");
+    const after = getValue("afterValue");
+    if (value === "" || after === "") return showMessage("Type both values first.", "error");
+    if (list.insertAfter(after, value) === null) {
+        return showMessage('"' + after + '" is not in the list.', "error");
+    }
+    showMessage('Inserted "' + value + '" after "' + after + '".', "success");
+    showList();
+}
+
+function searchValue() {
+    const value = getValue("searchValue");
+    if (value === "") return showMessage("Type a value first.", "error");
+    if (list.search(value)) {
+        showMessage('Found "' + value + '"!', "success");
+        showList(value);
+    } else {
+        showMessage('"' + value + '" is not in the list.', "error");
+    }
+}
+
+function deleteFirst() {
+    const removed = list.removeBeginning();
+    if (removed === null) return showMessage("The list is empty.", "error");
+    showMessage('Deleted "' + removed + '" from the start.', "success");
+    showList();
+}
+
+function deleteLast() {
+    const removed = list.removeAtEnd();
+    if (removed === null) return showMessage("The list is empty.", "error");
+    showMessage('Deleted "' + removed + '" from the end.', "success");
+    showList();
+}
+
+function deleteValue() {
+    const value = getValue("deleteValue");
+    if (value === "") return showMessage("Type a value first.", "error");
+    if (list.removeAt(value) === null) {
+        return showMessage('"' + value + '" is not in the list.', "error");
+    }
+    showMessage('Deleted "' + value + '".', "success");
+    showList();
+}
+
+function loadSample() {
+    list.head = null;
+    list.tail = null;
+    [10, 20, 30, 40, 50].forEach(n => list.insertAtEnd(n));
+    showMessage("Loaded sample list.", "success");
+    showList();
+}
+
+function clearList() {
+    list.head = null;
+    list.tail = null;
+    showMessage("List cleared.", "success");
+    showList();
+}
+
+
+showList();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert to Uppercase</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+        <nav class="site-nav" aria-label="Main">
+        <ul>
+            <li><a class="nav-link" href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}aria-current="page"{% endif %}>Home</a></li>
+            <li><a class="nav-link" href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}aria-current="page"{% endif %}>Profile</a></li>
+            <li><a class="nav-link" href="{{ url_for('works') }}" {% if request.endpoint == 'works' %}aria-current="page"{% endif %}>Programming Works</a></li>
+            <li><a class="nav-link" href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>Contacts</a></li>
+        </ul>
+    </nav>
+    <div class="welcome triangle-page">
+        <div class="welcome-content">
+            <h1>Area of Triangle</h1>
+
+            <form class="retro-form" action="/works/area/triangle" method="post">
+                <label for="base">Enter the base:</label>
+                <input type="text" id="base" name="base" placeholder="Base" inputmode="decimal" autocomplete="off" required>
+
+                <label for="height">Enter the height:</label>
+                <input type="text" id="height" name="height" placeholder="Height" inputmode="decimal" autocomplete="off" required>
+
+                <input type="submit" value="Compute">
+            </form>
+
+            {% if result is defined and result is not none %}
+            <div class="retro-result-box">
+                <p class="result-title">Area of the triangle:</p>
+                <p class="result-text">{{ result }}</p>
+            </div>
+            {% endif %}
+
+            <a href="{{ url_for('works') }}" class="start-button">↩ Back</a>
+        </div>
+    </div>
+</body>
+</html>

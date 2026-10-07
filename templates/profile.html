@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About me</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+        <nav class="site-nav" aria-label="Main">
+        <ul>
+            <li><a class="nav-link" href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}aria-current="page"{% endif %}>Home</a></li>
+            <li><a class="nav-link" href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}aria-current="page"{% endif %}>Profile</a></li>
+            <li><a class="nav-link" href="{{ url_for('works') }}" {% if request.endpoint == 'works' %}aria-current="page"{% endif %}>Programming Works</a></li>
+            <li><a class="nav-link" href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>Contacts</a></li>
+        </ul>
+    </nav>
+    <div class="welcome profile-page">
+        <div class="welcome-content">
+            <h1>Player Kashica's Profile</h1>
+
+            <div class="profile-card">
+                <div class="mario-frame" tabindex="0">
+                    <div class="mario-hat"><span class="hat-badge">M</span></div>
+                    <img class="avatar" src="{{ url_for('static', filename='images/profile.jpg') }}" alt="Profile picture of Player Kashica">
+                </div>
+
+                <h2 class="profile-name">Hello! I am Kashica Mhiel N. De Guzman</h2>
+
+                <div class="stat-block">
+                    <h3 class="stat-label">Course</h3>
+                    <p class="stat-value">Computer Engineering</p>
+                </div>
+
+                <div class="stat-block">
+                    <h3 class="stat-label">Skills</h3>
+                    <ul class="skill-list">
+                        <li>Python</li>
+                        <li>Editing</li>
+                    </ul>
+                </div>
+
+                <div class="stat-block">
+                    <h3 class="stat-label">Favorite Saying</h3>
+                    <p class="quote-block">"Take the Risk or Lose the Chance"</p>
+                </div>
+            </div>
+
+            <a href="{{ url_for('index') }}" class="start-button">↩ Back to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>

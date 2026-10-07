@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert to Uppercase</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+        <nav class="site-nav" aria-label="Main">
+        <ul>
+            <li><a class="nav-link" href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}aria-current="page"{% endif %}>Home</a></li>
+            <li><a class="nav-link" href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}aria-current="page"{% endif %}>Profile</a></li>
+            <li><a class="nav-link" href="{{ url_for('works') }}" {% if request.endpoint == 'works' %}aria-current="page"{% endif %}>Programming Works</a></li>
+            <li><a class="nav-link" href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>Contacts</a></li>
+        </ul>
+    </nav>
+    <div class="welcome uppercase-page">
+        <div class="welcome-content">
+            <h1>Convert String to Uppercase</h1>
+
+            <form class="retro-form" action="/works/convert/touppercase" method="post">
+                <label for="inputString">Enter a string:</label>
+                <input type="text" id="inputString" name="inputString" placeholder="Type here" autocomplete="off" required>
+                <input type="submit" value="Convert">
+            </form>
+
+            {% if result %}
+            <div class="retro-result-box">
+                <p class="result-title">Result:</p>
+                <p class="result-text">{{ result }}</p>
+            </div>
+            {% endif %}
+
+            <a href="{{ url_for('works') }}" class="start-button">↩ Back</a>
+        </div>
+    </div>
+</body>
+</html>

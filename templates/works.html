@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Programming Works</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+<head>
+<body>
+        <nav class="site-nav" aria-label="Main">
+        <ul>
+            <li><a class="nav-link" href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}aria-current="page"{% endif %}>Home</a></li>
+            <li><a class="nav-link" href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}aria-current="page"{% endif %}>Profile</a></li>
+            <li><a class="nav-link" href="{{ url_for('works') }}" {% if request.endpoint == 'works' %}aria-current="page"{% endif %}>Programming Works</a></li>
+            <li><a class="nav-link" href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>Contacts</a></li>
+        </ul>
+    </nav>
+    <div class="welcome works-page">
+        <div class="welcome-content">
+            <h1>Welcome to my programming works!</h1>
+
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('touppercase') }}" class = "start-button">Convert to UpperCase</a></li>
+                    <li><a href="{{ url_for('circle') }}" class = "start-button">Area of a Circle</a></li>
+                    <li><a href="{{ url_for('triangle') }}" class = "start-button">Area of a Triangle</a></li>
+                    <li><a href="{{ url_for('linkedlist') }}" class = "start-button">Linked List</a></li>
+                </ul>
+            </nav>  
+            <br>
+            <a href="{{ url_for('index') }}" class = "start-button" >↩Back to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>
