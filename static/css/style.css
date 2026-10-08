@@ -64,6 +64,13 @@ body {
         5px 5px 0 #e52521;
     animation: title-drop 0.6s steps(6, end) both;}
 
+.welcome-content > p {
+    font-size: clamp(9px, 2.5vw, 13px);
+    line-height: 1.4;
+    margin: 0 0 clamp(32px, 7vh, 64px);
+    color: #fff;
+    text-shadow: 2px 2px 0 #000;}
+
 /*---MENUS CSS---*/
 nav { display: flex; justify-content: center; }
 
