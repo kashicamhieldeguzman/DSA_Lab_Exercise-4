@@ -94,11 +94,11 @@ class Stack:
                 while ops.peek() is not None and ops.peek() != '(':
                     postfix.append(ops.pop())
                 if ops.peek() is None:
-                    return None          # ')' with no matching '('
-                ops.pop()                # remove '('
+                    return None         
+                ops.pop()                
             else:  # Operator
                 if Stack.precedence(char) == -1:
-                    return None          # unknown symbol
+                    return None          
                 while (ops.peek() is not None and
                        (Stack.precedence(ops.peek()) >= Stack.precedence(char) and char != '^')):
                     postfix.append(ops.pop())
@@ -107,7 +107,7 @@ class Stack:
         while ops.peek() is not None:
             op = ops.pop()
             if op == '(':
-                return None              # '(' with no matching ')'
+                return None              
             postfix.append(op)
 
         return ''.join(postfix)
@@ -122,7 +122,7 @@ st = Stack()                              # one shared stack, kept in memory whi
 @stack_bp.route('/stack')
 def stack():
     return render_template('stack.html',
-                           items=st.to_list()[::-1],              # bottom -> top
+                           items=st.to_list()[::-1],              
                            peeked=request.args.get('peeked'))
 
 @stack_bp.route('/stack/push', methods=['POST'])
@@ -181,10 +181,10 @@ def st_infix_to_postfix():
     return redirect(url_for('stack.stack'))
 
 
-# Your own experiments go here. This block does not run when app.py imports the file.
+
 if __name__ == "__main__":
     s = Stack()
     for value in (10, 20, 30):
         s.push(value)
     s.print_stack()
-    print(Stack.infix_to_postfix("(A+B)*C"))   # AB+C*
+    print(Stack.infix_to_postfix("(A+B)*C"))   

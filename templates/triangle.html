@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Convert to Uppercase</title>
+    <title>Area of Triangle</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -16,26 +16,34 @@
     <div class="welcome triangle-page">
         <div class="welcome-content">
             <h1>Area of Triangle</h1>
-
+ 
+            {% if error %}
+            <p class="ll-message error" role="status">{{ error }}</p>
+            {% endif %}
+ 
             <form class="retro-form" action="/works/area/triangle" method="post">
                 <label for="base">Enter the base:</label>
-                <input type="text" id="base" name="base" placeholder="Base" inputmode="decimal" autocomplete="off" required>
-
+                <input type="text" id="base" name="base" placeholder="Base" inputmode="decimal" pattern="[0-9]*\.?[0-9]+" title="Numbers only, like 5 or 2.5" autocomplete="off" required>
+ 
                 <label for="height">Enter the height:</label>
-                <input type="text" id="height" name="height" placeholder="Height" inputmode="decimal" autocomplete="off" required>
-
+                <input type="text" id="height" name="height" placeholder="Height" inputmode="decimal" pattern="[0-9]*\.?[0-9]+" title="Numbers only, like 5 or 2.5" autocomplete="off" required>
+ 
                 <input type="submit" value="Compute">
             </form>
-
+ 
             {% if result is defined and result is not none %}
             <div class="retro-result-box">
                 <p class="result-title">Area of the triangle:</p>
                 <p class="result-text">{{ result }}</p>
             </div>
             {% endif %}
-
+ 
             <a href="{{ url_for('works') }}" class="start-button">↩ Back</a>
         </div>
     </div>
+ 
+    <script src="{{ url_for('static', filename='js/recent.js') }}"></script>
 </body>
 </html>
+ 
+Claude finished the response

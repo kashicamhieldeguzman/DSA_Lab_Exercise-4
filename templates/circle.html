@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Convert to Uppercase</title>
+    <title>Area of Circle</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -17,11 +17,15 @@
         <div class="welcome-content">
             <h1>Area of Circle</h1>
 
+            {% if error %}
+            <p class="ll-message error" role="status">{{ error }}</p>
+            {% endif %}
+
             <form class="retro-form" action="/works/area/circle" method="post">
                 <label for="radius">Enter a radius:</label>
-                <input type="text" id="radius" name="radius" placeholder="Radius" inputmode="decimal" autocomplete="off" required>
-
+                <input type="text" id="radius" name="radius" placeholder="Radius" inputmode="decimal" pattern="[0-9]*\.?[0-9]+" title="Numbers only, like 5 or 2.5" autocomplete="off" required>
                 <input type="submit" value="Compute">
+                
             </form>
 
             {% if result is defined and result is not none %}
@@ -34,5 +38,7 @@
             <a href="{{ url_for('works') }}" class="start-button">↩ Back</a>
         </div>
     </div>
+
+    <script src="{{ url_for('static', filename='js/recent.js') }}"></script>
 </body>
 </html>

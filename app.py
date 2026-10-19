@@ -27,33 +27,41 @@ def works():
 @app.route('/works/convert/touppercase', methods=['GET', 'POST'])
 def touppercase():
     result = None
+    error = None
     if request.method == 'POST':
-        input_string = request.form.get('inputString', '')
-        result = input_string.upper()
-    return render_template('touppercase.html', result=result)
-
+        input_string = request.form.get('inputString', '').strip()
+        if input_string == '':
+            error = "Type something first."
+        else:
+            result = input_string.upper()
+    return render_template('touppercase.html', result=result, error=error)
+ 
 @app.route('/works/area/circle', methods=['GET', 'POST'])
 def circle():
     result = None
+    error = None
     if request.method == 'POST':
-        radius = request.form.get('radius', '')
-        result = int(radius)*3.14*int(radius)
-    return render_template('circle.html', result=result)
-
+        try:
+            radius = float(request.form.get('radius', ''))
+            result = f"{3.14 * radius * radius:.2f}"
+        except ValueError:
+            error = "Enter a number, like 5 or 2.5."
+    return render_template('circle.html', result=result, error=error)
+ 
 @app.route('/works/area/triangle', methods=['GET', 'POST'])
 def triangle():
     result = None
+    error = None
     if request.method == 'POST':
-        base = request.form.get('base', '')
-        height = request.form.get('height', '')
-        result = 0.5 * int(base) * int(height)
-    return render_template('triangle.html', result=result)
-
-
-
+        try:
+            base = float(request.form.get('base', ''))
+            height = float(request.form.get('height', ''))
+            result = f"{0.5 * base * height:.2f}"
+        except ValueError:
+            error = "Enter numbers only, like 5 or 2.5."
+    return render_template('triangle.html', result=result, error=error)
  
-
-
+ 
 # @app.route('/areaOfcirle', methods=['GET', 'POST'])
 # def areaOfcirle():
 #     result = None
@@ -63,10 +71,10 @@ def triangle():
 #         input_string = request.form.get('inputradius', '')
 #         result = int(input_string) * int(input_string) * 3.14
 #     return render_template('areaCircle.html', result=result)
-
+ 
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
-
+ 
 if __name__ == "__main__":
     app.run(debug=True)

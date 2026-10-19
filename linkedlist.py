@@ -232,7 +232,7 @@ def ll_clear():
     return back()
  
  
-# Your own experiments go here. This block does not run when app.py imports the file.
+
 if __name__ == "__main__":
     test = LinkedList()
     for value in [10, 20, 30]:

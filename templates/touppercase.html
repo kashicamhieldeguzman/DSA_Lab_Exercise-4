@@ -16,22 +16,28 @@
     <div class="welcome uppercase-page">
         <div class="welcome-content">
             <h1>Convert String to Uppercase</h1>
-
+ 
+            {% if error %}
+            <p class="ll-message error" role="status">{{ error }}</p>
+            {% endif %}
+ 
             <form class="retro-form" action="/works/convert/touppercase" method="post">
                 <label for="inputString">Enter a string:</label>
                 <input type="text" id="inputString" name="inputString" placeholder="Type here" autocomplete="off" required>
                 <input type="submit" value="Convert">
             </form>
-
+ 
             {% if result %}
             <div class="retro-result-box">
                 <p class="result-title">Result:</p>
                 <p class="result-text">{{ result }}</p>
             </div>
             {% endif %}
-
+ 
             <a href="{{ url_for('works') }}" class="start-button">↩ Back</a>
         </div>
     </div>
+ 
+    <script src="{{ url_for('static', filename='js/recent.js') }}"></script>
 </body>
 </html>
