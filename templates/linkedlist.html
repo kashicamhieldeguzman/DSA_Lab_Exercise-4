@@ -62,9 +62,9 @@
                 <label>After value:</label>
                 <input type="text" name="after" placeholder="Only for insert after" autocomplete="off">
                 <div class="btn-row">
-                    <button class="btn-small" formaction="{{ url_for('ll_insert_beginning') }}">Insert at beginning</button>
-                    <button class="btn-small" formaction="{{ url_for('ll_insert_end') }}">Insert at end</button>
-                    <button class="btn-small" formaction="{{ url_for('ll_insert_after') }}">Insert after value</button>
+                    <button class="btn-small" formaction="{{ url_for('linkedlist.ll_insert_beginning') }}">Insert at beginning</button>
+                    <button class="btn-small" formaction="{{ url_for('linkedlist.ll_insert_end') }}">Insert at end</button>
+                    <button class="btn-small" formaction="{{ url_for('linkedlist.ll_insert_after') }}">Insert after value</button>v
                 </div>
             </form>
         </div>
@@ -76,9 +76,9 @@
                 <label>Value:</label>
                 <input type="text" name="value" placeholder="Only for delete value" autocomplete="off">
                 <div class="btn-row">
-                    <button class="btn-small btn-danger" formaction="{{ url_for('ll_delete_last') }}">Delete last</button>
-                    <button class="btn-small btn-danger" formaction="{{ url_for('ll_delete_first') }}">Delete first</button>
-                    <button class="btn-small btn-danger" formaction="{{ url_for('ll_delete_value') }}">Delete value</button>
+                    <button class="btn-small btn-danger" formaction="{{ url_for('linkedlist.ll_delete_last') }}">Delete last</button>
+                    <button class="btn-small btn-danger" formaction="{{ url_for('linkedlist.ll_delete_first') }}">Delete first</button>
+                    <button class="btn-small btn-danger" formaction="{{ url_for('linkedlist.ll_delete_value') }}">Delete value</button>
                 </div>
             </form>
         </div>
@@ -89,7 +89,7 @@
                 <label>Value:</label>
                 <input type="text" name="value" placeholder="Value to find" autocomplete="off">
                 <div class="btn-row">
-                    <button class="btn-small" formaction="{{ url_for('ll_search') }}">Search</button>
+                    <button class="btn-small" formaction="{{ url_for('linkedlist.ll_search') }}">Search</button>
                 </div>
             </form>
         </div>
@@ -98,8 +98,8 @@
             <h3 class="stat-label">List</h3>
             <form method="post" class="retro-form">
                 <div class="btn-row">
-                    <button class="btn-small" formaction="{{ url_for('ll_sample') }}">Load sample</button>
-                    <button class="btn-small btn-danger" formaction="{{ url_for('ll_clear') }}">Clear list</button>
+                    <button class="btn-small" formaction="{{ url_for('linkedlist.ll_sample') }}">Load sample</button>
+                    <button class="btn-small btn-danger" formaction="{{ url_for('linkedlist.ll_clear') }}">Clear list</button>
                 </div>
             </form>
         </div>

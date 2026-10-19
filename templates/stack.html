@@ -3,31 +3,6 @@
 <head>
     <title>Stack</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-<body>
-    <nav class="site-nav" aria-label="Main">
-        <ul>
-            <li><a class="nav-link" href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}aria-current="page"{% endif %}>Home</a></li>
-            <li><a class="nav-link" href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}aria-current="page"{% endif %}>Profile</a></li>
-            <li><a class="nav-link" href="{{ url_for('works') }}" {% if request.endpoint == 'works' %}aria-current="page"{% endif %}>Programming Works</a></li>
-            <li><a class="nav-link" href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>Contacts</a></li>
-            <li><a class="nav-link" href="{{ url_for('stack') }}" {% if request.endpoint == 'stack' %}aria-current="page"{% endif %}>Stack</a></li>
-        </ul>
-    </nav>
-
-<div class="welcome linkedlist-page">
-<div class="welcome-content">
-<div class="ll-wide">
-
-    <h1>Stack</h1>
-
-    <!-- Messages from Flask -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, text in messages %}
-            <p class="ll-message {{ category }}">{{ text }}</p>
-        {% endfor %}
-    {% endwith %}
-
     <style>
         .stack-row {
             display: flex;
@@ -54,6 +29,29 @@
         }
     </style>
 </head>
+<body>
+    <nav class="site-nav" aria-label="Main">
+        <ul>
+            <li><a class="nav-link" href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}aria-current="page"{% endif %}>Home</a></li>
+            <li><a class="nav-link" href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}aria-current="page"{% endif %}>Profile</a></li>
+            <li><a class="nav-link" href="{{ url_for('works') }}" {% if request.endpoint == 'works' %}aria-current="page"{% endif %}>Programming Works</a></li>
+            <li><a class="nav-link" href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>Contacts</a></li>
+            <li><a class="nav-link" href="{{ url_for('stack.stack') }}" {% if request.endpoint == 'stack' %}aria-current="page"{% endif %}>Stack</a></li>
+        </ul>
+    </nav>
+
+<div class="welcome linkedlist-page">
+<div class="welcome-content">
+<div class="ll-wide">
+
+    <h1>Stack</h1>
+
+    <!-- Messages from Flask -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, text in messages %}
+            <p class="ll-message {{ category }}">{{ text }}</p>
+        {% endfor %}
+    {% endwith %}
 
     <!-- Info (left) + Stack output (right) -->
     <div class="stack-row">
@@ -97,7 +95,7 @@
                 <label>Value:</label>
                 <input type="text" name="value" placeholder="e.g. 10" autocomplete="off">
                 <div class="btn-row">
-                    <button class="btn-small" formaction="{{ url_for('st_push') }}">Push</button>
+                    <button class="btn-small" formaction="{{ url_for('stack.st_push') }}">Push</button>
                 </div>
             </form>
         </div>
@@ -108,7 +106,7 @@
                 <label>Expression:</label>
                 <input type="text" name="expression" placeholder="e.g. (A+B)*C" autocomplete="off">
                 <div class="btn-row">
-                    <button class="btn-small" formaction="{{ url_for('st_infix_to_postfix') }}">Convert</button>
+                    <button class="btn-small" formaction="{{ url_for('stack.st_infix_to_postfix') }}">Convert</button>
                 </div>
             </form>
         </div>
@@ -117,8 +115,8 @@
             <h3 class="stat-label">Pop / Peek</h3>
             <form method="post" class="retro-form">
                 <div class="btn-row">
-                    <button class="btn-small btn-danger" formaction="{{ url_for('st_pop') }}">Pop</button>
-                    <button class="btn-small" formaction="{{ url_for('st_peek') }}">Peek</button>
+                    <button class="btn-small btn-danger" formaction="{{ url_for('stack.st_pop') }}">Pop</button>
+                    <button class="btn-small" formaction="{{ url_for('stack.st_peek') }}">Peek</button>
                 </div>
             </form>
         </div>
@@ -127,8 +125,8 @@
             <h3 class="stat-label">Stack</h3>
             <form method="post" class="retro-form">
                 <div class="btn-row">
-                    <button class="btn-small" formaction="{{ url_for('st_sample') }}">Load sample</button>
-                    <button class="btn-small btn-danger" formaction="{{ url_for('st_clear') }}">Clear stack</button>
+                    <button class="btn-small" formaction="{{ url_for('stack.st_sample') }}">Load sample</button>
+                    <button class="btn-small btn-danger" formaction="{{ url_for('stack.st_clear') }}">Clear stack</button>
                 </div>
             </form>
         </div>

@@ -49,6 +49,64 @@ body {
     flex-direction: column;
     align-items: center;}
 
+/* Dark vignette + scanlines */
+.welcome::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-linear-gradient(to bottom, rgba(0,0,0,0.15) 0 1px, transparent 1px 3px),
+        radial-gradient(circle, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.9) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Ground */
+.welcome::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 48px;
+    background:
+        linear-gradient(to bottom, #80d010 0 8px, #00a800 8px 12px, transparent 12px),
+        repeating-linear-gradient(90deg, #000 0 4px, transparent 4px 48px),
+        repeating-linear-gradient(0deg, #000 0 4px, transparent 4px 24px),
+        #c84c0c;
+    border-top: 4px solid #000;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.welcome-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 720px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Pixel cloud */
+.welcome-content::before {
+    content: "";
+    position: absolute;
+    top: -70px;
+    right: 6%;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    box-shadow:
+        16px 0 #fff, 24px 0 #fff, 32px 0 #fff, 40px 0 #fff,
+        8px 8px #fff, 16px 8px #fff, 24px 8px #fff, 32px 8px #fff, 40px 8px #fff, 48px 8px #fff, 56px 8px #fff,
+        0 16px #fff, 8px 16px #fff, 16px 16px #fff, 24px 16px #fff, 32px 16px #fff, 40px 16px #fff, 48px 16px #fff, 56px 16px #fff, 64px 16px #fff,
+        8px 24px #cfe3ff, 16px 24px #cfe3ff, 24px 24px #cfe3ff, 32px 24px #cfe3ff, 40px 24px #cfe3ff, 48px 24px #cfe3ff, 56px 24px #cfe3ff;
+    opacity: 0.9;
+    animation: cloud-drift 8s steps(16) infinite alternate;
+    pointer-events: none;
+}
+
 /*---TITLE CSS---*/
 .welcome-content h1 {
     font-family: 'Silkscreen', 'Courier New', monospace;
@@ -452,6 +510,16 @@ nav ul {
     font-size: 9px;
     overflow-wrap: anywhere;}
 
+/* Center the Back button inside the page content */
+.ll-wide {
+    text-align: center;
+}
+
+.ll-wide > .start-button {
+    display: inline-block;
+    margin: 0 auto;
+}
+
 /*---TOP NAVIGATION BAR CSS---*/
 .site-nav {
     position: fixed;
@@ -470,3 +538,13 @@ nav ul {
     flex-wrap: wrap;
     justify-content: center;
     gap: 12px 14px;}
+
+/*---ANIMATIONS---*/
+@keyframes title-drop {
+    from { transform: translateY(-40px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes cloud-drift {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-40px); }
