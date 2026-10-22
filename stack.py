@@ -94,11 +94,11 @@ class Stack:
                 while ops.peek() is not None and ops.peek() != '(':
                     postfix.append(ops.pop())
                 if ops.peek() is None:
-                    return None         
-                ops.pop()                
+                    return None
+                ops.pop()
             else:  # Operator
                 if Stack.precedence(char) == -1:
-                    return None          
+                    return None
                 while (ops.peek() is not None and
                        (Stack.precedence(ops.peek()) >= Stack.precedence(char) and char != '^')):
                     postfix.append(ops.pop())
@@ -107,10 +107,43 @@ class Stack:
         while ops.peek() is not None:
             op = ops.pop()
             if op == '(':
-                return None              
+                return None
             postfix.append(op)
 
         return ''.join(postfix)
+
+    @staticmethod
+    def decimal_to_base(number, base):
+        """Convert a whole decimal number to base 2 to 16 using a stack.
+        Each remainder is pushed, then popped in reverse order to build the answer."""
+        if number == 0:
+            return "0"
+
+        digits = "0123456789ABCDEF"
+        sign = "-" if number < 0 else ""
+        number = abs(number)
+
+        remainders = Stack()
+        while number > 0:
+            remainders.push(digits[number % base])
+            number //= base
+
+        result = sign
+        while remainders.peek() is not None:
+            result += remainders.pop()
+        return result
+
+    @staticmethod
+    def reverse_string(text):
+        """Reverse a string using a stack: push every character, then pop them all."""
+        letters = Stack()
+        for char in text:
+            letters.push(char)
+
+        reversed_text = ""
+        while letters.peek() is not None:
+            reversed_text += letters.pop()
+        return reversed_text
 
 
 #                                               STACK ROUTES (blueprint)
@@ -122,7 +155,7 @@ st = Stack()                              # one shared stack, kept in memory whi
 @stack_bp.route('/stack')
 def stack():
     return render_template('stack.html',
-                           items=st.to_list()[::-1],              
+                           items=st.to_list()[::-1],
                            peeked=request.args.get('peeked'))
 
 @stack_bp.route('/stack/push', methods=['POST'])
@@ -149,7 +182,7 @@ def st_peek():
     top_value = st.peek()
     if top_value is not None:
         flash(f"Top value: {top_value}", "success")
-        return redirect(url_for('stack.stack', peeked=1))   # highlights the top node
+        return redirect(url_for('stack.stack', peeked=1))   
     flash("Stack is empty.", "error")
     return redirect(url_for('stack.stack'))
 
@@ -180,6 +213,38 @@ def st_infix_to_postfix():
             flash(f"Postfix: {postfix}", "success")
     return redirect(url_for('stack.stack'))
 
+@stack_bp.route('/stack/convert', methods=['POST'])
+def st_convert():
+    text = request.form.get('number', '').strip()
+    base = request.form.get('base', '')
+    names = {'2': 'binary', '8': 'octal', '16': 'hexadecimal'}
+
+    if text == '':
+        flash("Type a whole number first.", "error")
+    elif base not in names:
+        flash("Pick a number system.", "error")
+    elif len(text) > 18:
+        flash("That number is too long. Use 18 digits or fewer.", "error")
+    else:
+        try:
+            number = int(text)
+        except ValueError:
+            flash("Enter a whole number, like 25.", "error")
+        else:
+            result = Stack.decimal_to_base(number, int(base))
+            flash(f"{number} in {names[base]} is {result}", "success")
+    return redirect(url_for('stack.stack'))
+
+@stack_bp.route('/stack/reverse', methods=['POST'])
+def st_reverse():
+    text = request.form.get('text', '').strip()
+    if not text:
+        flash("Type a string first.", "error")
+    elif len(text) > 100:
+        flash("That is too long. Use 100 characters or fewer.", "error")
+    else:
+        flash(f"Reversed: {Stack.reverse_string(text)}", "success")
+    return redirect(url_for('stack.stack'))
 
 
 if __name__ == "__main__":
@@ -187,4 +252,6 @@ if __name__ == "__main__":
     for value in (10, 20, 30):
         s.push(value)
     s.print_stack()
-    print(Stack.infix_to_postfix("(A+B)*C"))   
+    print(Stack.infix_to_postfix("(A+B)*C"))  
+    print(Stack.decimal_to_base(25, 2))        
+    print(Stack.reverse_string("hello"))     

@@ -14,7 +14,7 @@
 
         .ll-track.stack-track {
             display: flex;
-            flex-direction: column-reverse;   /* first pushed item sits at the bottom */
+            flex-direction: column-reverse;  
             align-items: center;
             gap: 8px;
             min-height: 120px;
@@ -22,7 +22,6 @@
         .stack-track .ll-item { display: flex; flex-direction: column; align-items: center; }
         .stack-info p { margin: 6px 0; }
 
-        /* On narrow screens, stack the info above the output */
         @media (max-width: 640px) {
             .stack-row { flex-direction: column; }
             .stack-row .stack-info { flex: none; }
@@ -36,7 +35,6 @@
             <li><a class="nav-link" href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}aria-current="page"{% endif %}>Profile</a></li>
             <li><a class="nav-link" href="{{ url_for('works') }}" {% if request.endpoint == 'works' %}aria-current="page"{% endif %}>Programming Works</a></li>
             <li><a class="nav-link" href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>Contacts</a></li>
-            <li><a class="nav-link" href="{{ url_for('stack.stack') }}" {% if request.endpoint == 'stack' %}aria-current="page"{% endif %}>Stack</a></li>
         </ul>
     </nav>
 
@@ -86,7 +84,7 @@
 
     </div>
 
-    <!-- Buttons -->
+    <!-- Buttons: 2 columns x 3 rows -->
     <div class="ll-grid">
 
         <div class="ll-panel ll-box">
@@ -120,6 +118,19 @@
                 </div>
             </form>
         </div>
+        
+        <div class="ll-panel ll-box">
+            <h3 class="stat-label">Decimal to Other Base</h3>
+            <form method="post" class="retro-form">
+                <label>Whole number:</label>
+                <input type="text" name="number" placeholder="e.g. 25" inputmode="numeric" maxlength="18" autocomplete="off">
+                <div class="btn-row">
+                    <button class="btn-small" name="base" value="2" formaction="{{ url_for('stack.st_convert') }}">Binary</button>
+                    <button class="btn-small" name="base" value="8" formaction="{{ url_for('stack.st_convert') }}">Octal</button>
+                    <button class="btn-small" name="base" value="16" formaction="{{ url_for('stack.st_convert') }}">Hex</button>
+                </div>
+            </form>
+        </div>
 
         <div class="ll-panel ll-box">
             <h3 class="stat-label">Stack</h3>
@@ -127,6 +138,18 @@
                 <div class="btn-row">
                     <button class="btn-small" formaction="{{ url_for('stack.st_sample') }}">Load sample</button>
                     <button class="btn-small btn-danger" formaction="{{ url_for('stack.st_clear') }}">Clear stack</button>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="ll-panel ll-box">
+            <h3 class="stat-label">Reverse String</h3>
+            <form method="post" class="retro-form">
+                <label>String:</label>
+                <input type="text" name="text" placeholder="e.g. hello" maxlength="100" autocomplete="off">
+                <div class="btn-row">
+                    <button class="btn-small" formaction="{{ url_for('stack.st_reverse') }}">Reverse</button>
                 </div>
             </form>
         </div>
