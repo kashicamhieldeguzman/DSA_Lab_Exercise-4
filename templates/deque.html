@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Deque</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .deque-row {
+            display: flex;
+            gap: 16px;
+            align-items: stretch;
+            width: 100%;
+            margin-bottom: 28px;
+        }
+        .deque-row .ll-panel { margin: 0; }
+        .deque-row .deque-info { flex: 0 0 200px; }
+        .deque-row .deque-output { flex: 1; min-width: 0; }
+        .deque-info p { margin: 6px 0; }
+
+        @media (max-width: 640px) {
+            .deque-row { flex-direction: column; }
+            .deque-row .deque-info { flex: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="site-nav" aria-label="Main">
+        <ul>
+            <li><a class="nav-link" href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}aria-current="page"{% endif %}>Home</a></li>
+            <li><a class="nav-link" href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}aria-current="page"{% endif %}>Profile</a></li>
+            <li><a class="nav-link" href="{{ url_for('works') }}" {% if request.endpoint == 'works' %}aria-current="page"{% endif %}>Programming Works</a></li>
+            <li><a class="nav-link" href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>Contacts</a></li>
+        </ul>
+    </nav>
+
+<div class="welcome linkedlist-page">
+<div class="welcome-content">
+<div class="ll-wide">
+
+    <h1>Deque</h1>
+
+    <!-- Messages from Flask -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, text in messages %}
+            <p class="ll-message {{ category }}">{{ text }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <!-- Info (left) + deque output (right) -->
+    <div class="deque-row">
+
+        <div class="ll-panel deque-info">
+            <h3 class="stat-label">Info</h3>
+            <p>Size: <strong>{{ items|length }}</strong></p>
+            <p>Front: <strong>{% if items %}{{ items[0] }}{% else %}none{% endif %}</strong></p>
+            <p>Rear: <strong>{% if items %}{{ items[-1] }}{% else %}none{% endif %}</strong></p>
+            <p>Empty: <strong>{% if items %}No{% else %}Yes{% endif %}</strong></p>
+        </div>
+
+        <div class="ll-panel deque-output">
+            <h3 class="stat-label">Your deque (add and remove at both ends)</h3>
+            <div class="ll-track">
+                {% if items %}
+                    {% for item in items %}
+                        <div class="ll-item">
+                            <div class="ll-tags">
+                                {% if loop.first %}<span class="ll-tag head">Front</span>{% endif %}
+                                {% if loop.last %}<span class="ll-tag tail">Rear</span>{% endif %}
+                            </div>
+                            <div class="ll-node{% if (peeked == 'front' and loop.first) or (peeked == 'rear' and loop.last) %} found{% endif %}">
+                                <span class="ll-value">{{ item }}</span>
+                            </div>
+                        </div>
+                        {% if not loop.last %}<span class="ll-arrow">&#9668;&#9658;</span>{% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p class="ll-empty">The deque is empty. Add a value to start.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controls: 2 columns x 2 rows -->
+    <div class="ll-grid">
+
+        <div class="ll-panel ll-box">
+            <h3 class="stat-label">Add</h3>
+            <form method="post" class="retro-form">
+                <label for="deque-value">Value:</label>
+                <input type="text" id="deque-value" name="value" placeholder="e.g. 10" autocomplete="off">
+                <div class="btn-row">
+                    <button class="btn-small" formaction="{{ url_for('deque.dq_add_front') }}">Add front</button>
+                    <button class="btn-small" formaction="{{ url_for('deque.dq_add_rear') }}">Add rear</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="ll-panel ll-box">
+            <h3 class="stat-label">Remove</h3>
+            <form method="post" class="retro-form">
+                <div class="btn-row">
+                    <button class="btn-small btn-danger" formaction="{{ url_for('deque.dq_remove_front') }}">Remove front</button>
+                    <button class="btn-small btn-danger" formaction="{{ url_for('deque.dq_remove_rear') }}">Remove rear</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="ll-panel ll-box">
+            <h3 class="stat-label">Peek</h3>
+            <form method="post" class="retro-form">
+                <div class="btn-row">
+                    <button class="btn-small" formaction="{{ url_for('deque.dq_peek_front') }}">Peek front</button>
+                    <button class="btn-small" formaction="{{ url_for('deque.dq_peek_rear') }}">Peek rear</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="ll-panel ll-box">
+            <h3 class="stat-label">Deque</h3>
+            <form method="post" class="retro-form">
+                <div class="btn-row">
+                    <button class="btn-small" formaction="{{ url_for('deque.dq_sample') }}">Load sample</button>
+                    <button class="btn-small btn-danger" formaction="{{ url_for('deque.dq_clear') }}">Clear deque</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <a href="{{ url_for('queuedeque') }}" class="start-button">↩ Back</a>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

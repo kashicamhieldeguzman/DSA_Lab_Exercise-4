@@ -3,8 +3,7 @@
 <head>
     <title>My Programming Works</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    
-<head>
+</head>
 <body>
         <nav class="site-nav" aria-label="Main">
         <ul>
@@ -19,16 +18,17 @@
             <h1>Explore my programming works!</h1>
 
             <nav>
-                <ul>
-                    <li><a href="{{ url_for('touppercase') }}" class = "start-button">1. Convert to UpperCase</a></li>
-                    <li><a href="{{ url_for('circle') }}" class = "start-button">2. Area of a Circle</a></li>
-                    <li><a href="{{ url_for('triangle') }}" class = "start-button">3. Area of a Triangle</a></li>
-                    <li><a href="{{ url_for('linkedlist.linkedlist') }}" class = "start-button">4. Linked List</a></li>
-                    <li><a href="{{ url_for('stack.stack') }}" class = "start-button">5. Stack</a></li>
+                <ul class="works-menu">
+                    <li><a href="{{ url_for('touppercase') }}" class="start-button">1. Convert to UpperCase</a></li>
+                    <li><a href="{{ url_for('circle') }}" class="start-button">2. Area of a Circle</a></li>
+                    <li><a href="{{ url_for('triangle') }}" class="start-button">3. Area of a Triangle</a></li>
+                    <li><a href="{{ url_for('linkedlist.linkedlist') }}" class="start-button">4. Linked List</a></li>
+                    <li><a href="{{ url_for('stack.stack') }}" class="start-button">5. Stack</a></li>
+                    <li><a href="{{ url_for('queuedeque') }}" class="start-button">6. Queue and Deque</a></li>
                 </ul>
             </nav>
-            <br>
-            <a href="{{ url_for('index') }}" class = "start-button" >↩Back to Homepage</a>
+
+            <a href="{{ url_for('index') }}" class="start-button">↩ Back to Homepage</a>
         </div>
     </div>
 </body>

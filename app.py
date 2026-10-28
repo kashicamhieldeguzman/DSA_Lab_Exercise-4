@@ -1,12 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from stack import stack_bp, to_value
 from linkedlist import linkedlist_bp
+from queue_routes import queue_bp
+from deque import deque_bp
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 app.register_blueprint(stack_bp) 
 app.register_blueprint(linkedlist_bp)
+app.register_blueprint(queue_bp)
+app.register_blueprint(deque_bp)
 
 @app.route('/')
 def index():
@@ -23,6 +27,10 @@ def profile():
 @app.route('/works')
 def works():
     return render_template('works.html')
+
+@app.route('/queuedeque')
+def queuedeque():
+    return render_template('queuedeque.html')
 
 @app.route('/works/convert/touppercase', methods=['GET', 'POST'])
 def touppercase():

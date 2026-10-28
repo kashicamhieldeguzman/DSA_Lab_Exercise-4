@@ -539,6 +539,30 @@ nav ul {
     justify-content: center;
     gap: 12px 14px;}
 
+/*---WORKS MENU CSS---*/
+.works-page .welcome-content { max-width: 900px; }
+
+.works-menu {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 20px;
+    margin-bottom: 28px;}
+
+.works-menu li {
+    display: flex;
+    flex: 0 0 270px;}
+
+.works-menu .start-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    font-size: 11px;}
+
 /*---ANIMATIONS---*/
 @keyframes title-drop {
     from { transform: translateY(-40px); opacity: 0; }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Queue and Deque</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="site-nav" aria-label="Main">
+        <ul>
+            <li><a class="nav-link" href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}aria-current="page"{% endif %}>Home</a></li>
+            <li><a class="nav-link" href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}aria-current="page"{% endif %}>Profile</a></li>
+            <li><a class="nav-link" href="{{ url_for('works') }}" {% if request.endpoint == 'works' %}aria-current="page"{% endif %}>Programming Works</a></li>
+            <li><a class="nav-link" href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>Contacts</a></li>
+        </ul>
+    </nav>
+
+    <div class="welcome works-page">
+        <div class="welcome-content">
+            <h1>Queue and Deque</h1>
+
+            <nav style="margin-bottom: 28px;">
+                <ul>
+                    <li><a href="{{ url_for('queue.queue') }}" class="start-button">Queue</a></li>
+                    <li><a href="{{ url_for('deque.deque') }}" class="start-button">Deque</a></li>
+                </ul>
+            </nav>
+
+            <a href="{{ url_for('works') }}" class="start-button">↩ Back</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Queue</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .queue-row {
+            display: flex;
+            gap: 16px;
+            align-items: stretch;
+            width: 100%;
+            margin-bottom: 28px;
+        }
+        .queue-row .ll-panel { margin: 0; }
+        .queue-row .queue-info { flex: 0 0 200px; }
+        .queue-row .queue-output { flex: 1; min-width: 0; }
+        .queue-info p { margin: 6px 0; }
+
+        /* a panel that takes the whole row of the control grid */
+        .ll-grid .span-2 { grid-column: 1 / -1; }
+
+        @media (max-width: 640px) {
+            .queue-row { flex-direction: column; }
+            .queue-row .queue-info { flex: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="site-nav" aria-label="Main">
+        <ul>
+            <li><a class="nav-link" href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}aria-current="page"{% endif %}>Home</a></li>
+            <li><a class="nav-link" href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}aria-current="page"{% endif %}>Profile</a></li>
+            <li><a class="nav-link" href="{{ url_for('works') }}" {% if request.endpoint == 'works' %}aria-current="page"{% endif %}>Programming Works</a></li>
+            <li><a class="nav-link" href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>Contacts</a></li>
+        </ul>
+    </nav>
+
+<div class="welcome linkedlist-page">
+<div class="welcome-content">
+<div class="ll-wide">
+
+    <h1>Queue</h1>
+
+    <!-- Messages from Flask -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, text in messages %}
+            <p class="ll-message {{ category }}">{{ text }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <!-- Info (left) + queue output (right) -->
+    <div class="queue-row">
+
+        <div class="ll-panel queue-info">
+            <h3 class="stat-label">Info</h3>
+            <p>Size: <strong>{{ items|length }}</strong></p>
+            <p>Front: <strong>{% if items %}{{ items[0] }}{% else %}none{% endif %}</strong></p>
+            <p>Rear: <strong>{% if items %}{{ items[-1] }}{% else %}none{% endif %}</strong></p>
+            <p>Empty: <strong>{% if items %}No{% else %}Yes{% endif %}</strong></p>
+        </div>
+
+        <div class="ll-panel queue-output">
+            <h3 class="stat-label">Your queue (FIFO: first in, first out)</h3>
+            <div class="ll-track">
+                {% if items %}
+                    {% for item in items %}
+                        <div class="ll-item">
+                            <div class="ll-tags">
+                                {% if loop.first %}<span class="ll-tag head">Front</span>{% endif %}
+                                {% if loop.last %}<span class="ll-tag tail">Rear</span>{% endif %}
+                            </div>
+                            <div class="ll-node{% if peeked and loop.first %} found{% endif %}">
+                                <span class="ll-value">{{ item }}</span>
+                            </div>
+                        </div>
+                        {% if not loop.last %}<span class="ll-arrow">&#9658;</span>{% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p class="ll-empty">The queue is empty. Enqueue a value to start.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controls -->
+    <div class="ll-grid">
+
+        <div class="ll-panel ll-box">
+            <h3 class="stat-label">Enqueue</h3>
+            <form method="post" class="retro-form">
+                <label for="enqueue-value">Value:</label>
+                <input type="text" id="enqueue-value" name="value" placeholder="e.g. 10" autocomplete="off">
+                <div class="btn-row">
+                    <button class="btn-small" formaction="{{ url_for('queue.qq_enqueue') }}">Enqueue</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="ll-panel ll-box">
+            <h3 class="stat-label">Dequeue / Peek</h3>
+            <form method="post" class="retro-form">
+                <div class="btn-row">
+                    <button class="btn-small btn-danger" formaction="{{ url_for('queue.qq_dequeue') }}">Dequeue</button>
+                    <button class="btn-small" formaction="{{ url_for('queue.qq_peek') }}">Peek</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="ll-panel ll-box span-2">
+            <h3 class="stat-label">Queue</h3>
+            <form method="post" class="retro-form">
+                <div class="btn-row">
+                    <button class="btn-small" formaction="{{ url_for('queue.qq_sample') }}">Load sample</button>
+                    <button class="btn-small btn-danger" formaction="{{ url_for('queue.qq_clear') }}">Clear queue</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <a href="{{ url_for('queuedeque') }}" class="start-button">↩ Back</a>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>
